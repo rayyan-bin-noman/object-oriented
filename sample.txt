@@ -1,1 +1,2 @@
 Sampling for git by Rayyan Bin Noman
+Commiting from vs code
