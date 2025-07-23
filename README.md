@@ -1,3 +1,3 @@
 # hello
 
-dfjf dfjds fkds fds fdfd df 
+I'm a beginner code learner, working on C++ 
