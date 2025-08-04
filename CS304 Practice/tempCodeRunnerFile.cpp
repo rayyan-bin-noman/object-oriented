@@ -1,1 +1,1 @@
- // cout << "SUM is: \t";
+Denominator
