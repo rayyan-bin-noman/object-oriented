@@ -1,4 +1,2 @@
-23 -> rayyan
-34 -> Rayyan
-45 -> Soban
-235 -> Shahzaib
+1 -> Rayyan Bin Noman
+4 -> Soban Bin Noman

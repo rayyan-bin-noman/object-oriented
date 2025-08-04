@@ -26,8 +26,9 @@ int main()
         cout << "\nPlease Enter ID: ";
         cin >> id;
 
-        cout << "Please Enter Name (single word only): ";
-        cin >> name; // use getline if you want full name with spaces
+        cout << "Please Enter Full Name: ";
+        cin.ignore();              // clears the newline after previous cin
+        getline(cin, name);        // now it reads full name with spaces
 
         file << id << " -> " << name << endl; // writing to file
 
