@@ -9,6 +9,7 @@ class Node
 public:
     int data;            // stores the data value of the node
     Node *next_addr;     // pointer to the next node in the list
+    Node *pre_addr;     // pointer to the previous node in the list
 };
 
 
@@ -18,6 +19,7 @@ class Linked_list
 {
 public:
     Node *head = NULL;   // pointer to the first node in the list (NULL means empty list)
+    Node *tail = NULL;   // pointer to the last node in the list (NULL means empty list)
 
     
     // Function: setdata()
