@@ -19,7 +19,6 @@ class Linked_list
 public:
     Node *head = NULL;   // pointer to the first node in the list (NULL means empty list)
 
-    
     // Function: setdata()
     // Purpose: Insert a new node at the end
     
@@ -187,8 +186,8 @@ public:
             // traverse the list
             while (ptr != NULL)
             {
-                if (ptr->data == n)
-                {        // value found
+                if (ptr->data == n)      // value found
+                {       
                     found = 1;
                     if (prev == NULL)        // deleting first node
                     {     

@@ -22,10 +22,13 @@ public:
 
         Node* new_node = new Node(n);
 
-        if (head == nullptr) {
+        if (head == nullptr) 
+        {
             // first node in the list
             head = tail = new_node;
-        } else {
+        } 
+        else 
+        {
             // append to tail
             tail->next_addr = new_node;
             new_node->pre_addr = tail;
@@ -150,31 +153,39 @@ public:
         int position = 1;
         bool found = false;
 
-        while (ptr != nullptr) {
-            if (ptr->data == n) {
+        while (ptr != nullptr)                  // traverse the list
+        {
+            if (ptr->data == n)                 // value found
+            {               
                 // Link previous node to next node (if prev exists)
-                if (ptr->pre_addr != nullptr) {
-                    ptr->pre_addr->next_addr = ptr->next_addr;
-                } else {
-                    // deleting head
-                    head = ptr->next_addr;
+                if (ptr->pre_addr != nullptr)    // not head
+                {                 
+                    ptr->pre_addr->next_addr = ptr->next_addr;   // connect its previous node’s next_add to its next node, “bypassing” the current one
+                } 
+                else 
+                {                                           
+                    // If ptr->pre_addr is null, this means we’re deleting the head node, so we move the head pointer one step forward
+                    head = ptr->next_addr;                     
                 }
 
                 // Link next node to previous node (if next exists)
-                if (ptr->next_addr != nullptr) {
-                    ptr->next_addr->pre_addr = ptr->pre_addr;
-                } else {
-                    // deleting tail
+                if (ptr->next_addr != nullptr)                 // not tail
+                {
+                    ptr->next_addr->pre_addr = ptr->pre_addr;   // connect its next node’s pre_add to its previous node, “bypassing” the current one
+                } 
+                else 
+                {
+                    // If ptr->next_addr is null, this means we’re deleting the tail node, so we move the tail pointer one step bacwards
                     tail = ptr->pre_addr;
                 }
 
-                delete ptr;
+                delete ptr;               
                 cout << "\nNode deleted successfully (was node " << position << ").";
-                found = true;
+                found = true;           
                 break;
             }
-            ptr = ptr->next_addr;
-            ++position;
+            ptr = ptr->next_addr;           // move to next node
+            ++position;                     // increment node counter
         }
 
         if (!found) {
