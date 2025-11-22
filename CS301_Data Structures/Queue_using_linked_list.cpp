@@ -1,189 +1,244 @@
 #include<iostream>
 using namespace std;
 
+// Node structure
+class Node 
+{
+public:
+    int data;
+    Node* next;
+
+    Node(int val) 
+    {
+        data = val;
+        next = nullptr;
+    }
+};
+
+// Queue class using Linked List
 class Queue 
 {
 private:
-    int front, rear, capacity;
-    int* arr;
+    Node* front;
+    Node* rear;
 
 public:
 
     // Constructor
-    Queue(int c)    
+    Queue() 
     {
-        front = rear = 0;
-        capacity = c;
-        arr = new int[capacity];
+        front = rear = nullptr;
     }
 
     // Enqueue operation
-    void enqueue()    
+    void enqueue() 
     {
-        if (rear == capacity)       // Queue full
-        {
-            cout << "Queue is Full\n";
-            return;
-        }
-
         int n;
         cout << "Enter value to enqueue: ";
         cin >> n;
 
-        arr[rear++] = n;
+        Node* newNode = new Node(n);
+
+        if (rear == nullptr) {       // Queue empty
+            front = rear = newNode;
+        }
+        else {
+            rear->next = newNode;    // Link at end
+            rear = newNode;          // Move rear
+        }
+
         cout << n << " enqueued to queue\n";
     }
 
     // Dequeue operation
     void dequeue() 
     {
-        if (front == rear)         // Queue empty
-        {
+        if (front == nullptr)                // Queue empty
+        {                           
             cout << "Queue is Empty\n";
             return;
         }
 
-        cout << arr[front] << " dequeued from queue\n";
-        front++;
+        Node* temp = front;
+        cout << temp->data << " dequeued from queue\n";
+
+        front = front->next;
+
+        if (front == nullptr)         // If queue becomes empty
+            rear = nullptr;
+
+        delete temp;
     }
 
-    // Display elements
-    void display()                 
+    // Display queue
+    void display() 
     {
-        if (front == rear)
-        {
+        if (front == nullptr) {
             cout << "Queue is Empty\n";
             return;
         }
 
-        cout << "Queue elements are:\n";
-        for (int i = front; i < rear; i++)
+        Node* temp = front;
+        cout << "Queue elements:\n";
+        while (temp != nullptr) 
         {
-            cout << arr[i] << endl;
+            cout << temp->data << endl;
+            temp = temp->next;
         }
     }
 
     // Size of queue
-    void size()                     
+    void size() 
     {
-        cout << "Queue size is: " << rear - front << endl;
+        int count = 0;
+        Node* temp = front;
+
+        while (temp != nullptr) 
+        {
+            count++;
+            temp = temp->next;
+        }
+
+        cout << "Queue size is: " << count << endl;
     }
 
-    // Search element
-    void search()                           
+    // Search in queue
+    void search() 
     {
-        if (front == rear)
+        if (front == nullptr) 
         {
             cout << "Queue is Empty\n";
             return;
         }
 
-        int n;
+        int n, pos = 1;
         cout << "Enter value to search: ";
         cin >> n;
 
-        for (int i = front; i < rear; i++)
+        Node* temp = front;
+
+        while (temp != nullptr) 
         {
-            if (arr[i] == n)
+            if (temp->data == n) 
             {
-                cout << n << " found at position " << (i - front + 1) << "\n";
+                cout << n << " found at position " << pos << endl;
                 return;
             }
+            pos++;
+            temp = temp->next;
         }
 
         cout << n << " not found in queue\n";
     }
 
     // Update element
-    void update(int oldVal, int newVal)   
+    void update(int oldVal, int newVal) 
     {
-        if (front == rear)
+        if (front == nullptr) 
         {
             cout << "Queue is Empty\n";
             return;
         }
 
-        for (int i = front; i < rear; i++)
+        Node* temp = front;
+        while (temp != nullptr) 
         {
-            if (arr[i] == oldVal)
+            if (temp->data == oldVal) 
             {
-                arr[i] = newVal;
-                cout << oldVal << " updated to " << newVal << "\n";
+                temp->data = newVal;
+                cout << oldVal << " updated to " << newVal << endl;
                 return;
             }
+            temp = temp->next;
         }
 
         cout << oldVal << " not found in queue\n";
-    }   
+    }
 
     // Check empty
-    void isEmpty()                  
+    void isEmpty() 
     {
-        if (front == rear)
+        if (front == nullptr)
             cout << "Queue is Empty\n";
         else
             cout << "Queue is not Empty\n";
-    }   
+    }
 
-    // Reverse the queue
+    // Reverse queue
     void reverse() 
     {
-        if (front == rear)
+        if (front == nullptr) 
         {
             cout << "Queue is Empty\n";
             return;
         }
 
-        int start = front;
-        int end = rear - 1;
+        Node* prev = nullptr;
+        Node* curr = front;
+        Node* next = nullptr;
 
-        while (start < end)
+        rear = front;   // After reversing, old front becomes rear
+
+        while (curr != nullptr) 
         {
-            swap(arr[start], arr[end]);
-            start++;
-            end--;
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
         }
+
+        front = prev;
 
         cout << "Queue reversed\n";
     }
 
     // Clear queue
-    void clear()                    
+    void clear() 
     {
-        front = rear = 0;
+        Node* temp;
+
+        while (front != nullptr) 
+        {
+            temp = front;
+            front = front->next;
+            delete temp;
+        }
+
+        rear = nullptr;
+
         cout << "Queue cleared\n";
     }
 
-    // Peek front element
-    void peek()                    
+    // Peek front
+    void peek() 
     {
-        if (front == rear)
+        if (front == nullptr)
             cout << "Queue is Empty\n";
         else
-            cout << "Front element is: " << arr[front] << endl;
+            cout << "Front element is: " << front->data << endl;
     }
 
     // Destructor
     ~Queue() 
     {
-        delete[] arr;
+        clear();
     }
 };
 
-int main()
+int main() 
 {
     int choice, oldVal, newVal;
 
-    Queue q(10);   // create queue of size 10
+    Queue q;
 
-    while (true)
+    while (true) 
     {
         cout << "\nQueue Menu:\n";
         cout << "1. Enqueue\n";
         cout << "2. Dequeue\n";
         cout << "3. Display\n";
         cout << "4. Size\n";
-        cout << "5. Search\n";       
+        cout << "5. Search\n";
         cout << "6. Update\n";
         cout << "7. Is Empty\n";
         cout << "8. Reverse\n";
@@ -193,7 +248,7 @@ int main()
         cout << "Enter your choice: ";
         cin >> choice;
 
-        switch (choice)
+        switch (choice) 
         {
             case 1: q.enqueue(); break;
             case 2: q.dequeue(); break;
@@ -201,7 +256,7 @@ int main()
             case 4: q.size(); break;
             case 5: q.search(); break;
             case 6:
-                cout << "Enter old value and new value: ";
+                cout << "Enter old value & new value: ";
                 cin >> oldVal >> newVal;
                 q.update(oldVal, newVal);
                 break;
@@ -210,7 +265,7 @@ int main()
             case 9: q.clear(); break;
             case 10: q.peek(); break;
             case 11: exit(0);
-            default: cout << "Invalid choice. Try again.\n";
+            default: cout << "Invalid choice\n";
         }
     }
 

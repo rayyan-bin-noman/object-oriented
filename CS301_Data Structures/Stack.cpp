@@ -149,6 +149,7 @@ int main()
     int choice, value, oldVal, newVal;
     while (true)        
     {
+        system("cls");
         cout << "\nStack Menu:\n";
         cout << "1. Push\n";
         cout << "2. Pop\n";
