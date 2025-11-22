@@ -73,6 +73,7 @@ public:
         else
         {
             int n;
+            int found = 0;
             cout << "Enter value to search: ";  
             cin >> n;                        // take value to search
             for (int i = top; i >= 0; i--)      // search from top to bottom
@@ -80,9 +81,12 @@ public:
                 if (arr[i] == n)
                 {
                     cout << n << " found at position " << top - i + 1 << " from top\n";     // top - i + 1 = distance from top
+                    found++;
+                    break;
                 }
             }
-            cout << n << " not found in stack\n"; // element not found
+            if (found == 0)
+            cout << n << " not found in stack\n";           // element not found
         }
     }
     void update(int oldVal, int newVal)   // update an element
@@ -91,15 +95,18 @@ public:
         {
             cout << "Stack is Empty\n";
         }
+        int found;
         for (int i = top; i >= 0; i--)      // search from top to bottom
         {
             if (arr[i] == oldVal)
             {
                 arr[i] = newVal;                // update value
                 cout << oldVal << " updated to " << newVal << "\n";
+                found++;
             }
         }
-        cout << oldVal << " not found in stack\n"; // element not found
+        if (found == 0)
+        cout << oldVal << " not found in stack\n";          // element not found
     }
     void isEmpty()                  // check if stack is empty
     {
