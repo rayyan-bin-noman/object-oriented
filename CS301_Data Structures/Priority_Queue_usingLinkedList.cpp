@@ -30,6 +30,34 @@ public:
         front = rear = nullptr;
     }
 
+    // --- Reusable Sorting Function ---
+    // Smaller value = Higher priority
+    void Sort_Queue()
+    {
+        if (front == nullptr || front->next == nullptr)
+            return; // No need to sort if queue is empty or has one element
+
+        bool swapped;
+        do 
+        {
+            swapped = false;
+            Node* curr = front;
+            Node* prev = nullptr;
+
+            while (curr->next != nullptr) 
+            {
+                if (curr->data > curr->next->data) 
+                {
+                    // Swap data
+                    swap(curr->data, curr->next->data);
+                    swapped = true;
+                }
+                prev = curr;
+                curr = curr->next;
+            }
+        } while (swapped);
+    }
+
     // Enqueue operation
     void enqueue() 
     {
@@ -49,6 +77,7 @@ public:
             rear = newNode;          // Move rear
         }
 
+        Sort_Queue();         // sort the queue
         cout << n << " enqueued to queue\n";
     }
 
@@ -82,7 +111,7 @@ public:
         }
 
         Node* temp = front;
-        cout << "Queue elements:\n";
+        cout << "Sorted queue elements:\n";
         while (temp != nullptr) 
         {
             cout << temp->data << "  ";
@@ -160,6 +189,7 @@ public:
                 return;
             }
             temp = temp->next;
+            Sort_Queue();         // sort the queue
         }
 
         cout << oldVal << " not found in queue\n";
@@ -172,34 +202,6 @@ public:
             cout << "Queue is Empty\n";
         else
             cout << "Queue is not Empty\n";
-    }
-
-    // Reverse queue
-    void reverse() 
-    {
-        if (front == nullptr) 
-        {
-            cout << "Queue is Empty\n";
-            return;
-        }
-
-        Node* prev = nullptr;       // Previous node
-        Node* curr = front;         // Current node 
-        Node* next = nullptr;       // Next node
-
-        rear = front;   // After reversing, old front becomes rear
-
-        while (curr != nullptr) 
-        {
-            next = curr->next;     // Store next node
-            curr->next = prev;   // Reverse current node's pointer      
-            prev = curr;        // Move pointers one position ahead
-            curr = next;        // Move to next node
-        }
-
-        front = prev;
-
-        cout << "Queue reversed\n";
     }
 
     // Clear queue
@@ -251,10 +253,9 @@ int main()
         cout << "5. Search\n";
         cout << "6. Update\n";
         cout << "7. Is Empty\n";
-        cout << "8. Reverse\n";
-        cout << "9. Clear\n";
-        cout << "10. Peek\n";
-        cout << "11. Exit\n";
+        cout << "8. Clear\n";
+        cout << "9. Peek\n";
+        cout << "10. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -267,10 +268,9 @@ int main()
             case 5: q.search(); break;
             case 6: q.update(); break;
             case 7: q.isEmpty(); break;
-            case 8: q.reverse(); break;
-            case 9: q.clear(); break;
-            case 10: q.peek(); break;
-            case 11: exit(0);
+            case 8: q.clear(); break;
+            case 9: q.peek(); break;
+            case 10 : exit(0);
             default: cout << "Invalid choice\n";
         }
     }

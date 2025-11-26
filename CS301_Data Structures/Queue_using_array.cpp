@@ -4,7 +4,7 @@ using namespace std;
 class Queue 
 {
 private:
-    int front, rear, capacity;
+    int front, rear, capacity;          //front = index of front element, rear = index of next insertion point , capacity = maximum size of queue
     int* arr;
 
 public:
@@ -59,14 +59,14 @@ public:
         cout << "Queue elements are:\n";
         for (int i = front; i < rear; i++)
         {
-            cout << arr[i] << endl;
+            cout << arr[i] << "  ";
         }
     }
 
     // Size of queue
     void size()                     
     {
-        cout << "Queue size is: " << rear - front << endl;      
+        cout << "Queue size is: " << rear - front << endl;     
     }
 
     // Search element
